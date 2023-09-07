@@ -42,14 +42,15 @@ const setMovieReview = async (req, res) => {
         user.VIP += 1;
       }
       if (user.VIP === 0) {
-        user.commRate = 0.3;
+        user.commRate = 0.8;
       } else if (user.VIP === 1) {
-        user.commRate = 0.35;
+        user.commRate = 1;
       } else if (user.VIP === 2) {
-        user.commRate = 0.4;
-      } else if (user.VIP === 3) {
-        user.commRate = 0.45;
+        user.commRate = 1.2;
       }
+      // else if (user.VIP === 3) {
+      //   user.commRate = 0.45;
+      // }
 
       //  }else if(user.VIP===4){
       //   user.commRate = 0.50
