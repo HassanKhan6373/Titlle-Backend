@@ -64,7 +64,7 @@ const getRandomRecord = async (req, res) => {
     //   8: 250000,
     // };
     const vipPriceRanges = {
-      0: 188,
+      0: { min: 188, max: 188 },
       1: { min: 100, max: 999 },
       2: { min: 1000, max: 7999 },
     };
@@ -76,7 +76,7 @@ const getRandomRecord = async (req, res) => {
     const randomMovie = await Movie.aggregate([
       {
         $match: {
-          price: { $lte: maxPrice },
+          price: { $lte: maxPrice["max"], $gte: maxPrice["min"] },
         },
       },
       { $sample: { size: 1 } }, // Retrieve one random movie
