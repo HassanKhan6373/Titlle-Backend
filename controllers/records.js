@@ -65,7 +65,11 @@ const getRandomRecord = async (req, res) => {
     const randomMovie = await Movie.aggregate([
       {
         $match: {
+<<<<<<< HEAD
           price: { $gte:min, $lte: max },
+=======
+          price: { $lte: maxPrice["max"], $gte: maxPrice["min"] },
+>>>>>>> fef902094a1fe0c1849a96ba215aa860e36e61c3
         },
       },
       { $sample: { size: 1 } }, // Retrieve one random movie
