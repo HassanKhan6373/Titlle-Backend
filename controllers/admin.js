@@ -95,48 +95,51 @@ const unblockUserLogin = async (req, res) => {
   }
  }
 
-  const addUserPoints =async (req, res) => {
-    const { id } = req.params;
-    const { pointsToAdd } = req.body;
+  // const addUserPoints =async (req, res) => {
+  //   const { id } = req.params;
+  //   const { pointsToAdd } = req.body;
   
-    try {
-      const user = await User.findById( id );
+  //   try {
+  //     const user = await User.findById( id );
   
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      user.points += pointsToAdd
-      if (user.points >= 700) {
-        user.VIP = 7;
-      } else if (user.points >= 600) {
-        user.VIP = 6;
-      } else if (user.points >= 500) {
-        user.VIP = 5;
-      } else if (user.points >= 400) {
-        user.VIP = 4;
-      } else if (user.points >= 300) {
-        user.VIP = 3;
-      } else if (user.points >= 200) {
-        user.VI = 2;
-      } else if (user.points >= 100) {
-        user.VIP = 1;
-      } else {
-        user.VIP.VIPLevel = 0;
-      }
+  //     if (!user) {
+  //       return res.status(404).json({ message: 'User not found' });
+  //     }
+  //     user.points += pointsToAdd
+  //     if (user.points >= 700) {
+  //       user.VIP = 7;
+  //     } else if (user.points >= 600) {
+  //       user.VIP = 6;
+  //     } else if (user.points >= 500) {
+  //       user.VIP = 5;
+  //     } else if (user.points >= 400) {
+  //       user.VIP = 4;
+  //     } else if (user.points >= 300) {
+  //       user.VIP = 3;
+  //     } else if (user.points >= 200) {
+  //       user.VIP = 2;
+  //     } else if (user.points >= 100) {
+  //       user.VIP = 1;
+  //     } else {
+  //       user.VIP.VIPLevel = 0;
+  //     }
   
-      await user.save();
+  //     await user.save();
   
-      res.status(200).json({ message: 'Points added successfully' });
-    } catch (error) {
-      console.error('Error adding points:', error);
-      res.status(500).json({ error: 'Server error' });
-    }
-  };
+  //     res.status(200).json({ message: 'Points added successfully' });
+  //   } catch (error) {
+  //     console.error('Error adding points:', error);
+  //     res.status(500).json({ error: 'Server error' });
+  //   }
+  // };
   
 const editUserVipLevel = async (req,res)=>{
     const { id } = req.params;
     const { newLevel } = req.body;
 try{
+  if(newLevel >=3 ){
+    res.status(400).json({'message':'Level cant be more than 2'})
+  }
     const user = await User.findById( id );
   
     if (!user) {
@@ -152,43 +155,43 @@ try{
       res.status(500).json({ error: 'Server error' });
     }
 }
-  const subtractUserPoints =async (req, res) => {
-    const { id } = req.params;
-    const { pointsToSubtract } = req.body;
+  // const subtractUserPoints =async (req, res) => {
+  //   const { id } = req.params;
+  //   const { pointsToSubtract } = req.body;
   
-    try {
-      const user = await User.findById( id );
+  //   try {
+  //     const user = await User.findById( id );
   
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      user.points -= pointsToSubtract
-      if (user.points >= 700) {
-        user.VIP = 7;
-      } else if (user.points >= 600) {
-        user.VIP = 6;
-      } else if (user.points >= 500) {
-        user.VIP = 5;
-      } else if (user.points >= 400) {
-        user.VIP = 4;
-      } else if (user.points >= 300) {
-        user.VIP = 3;
-      } else if (user.points >= 200) {
-        user.VI = 2;
-      } else if (user.points >= 100) {
-        user.VIP = 1;
-      } else {
-        user.VIP.VIPLevel = 0;
-      }
+  //     if (!user) {
+  //       return res.status(404).json({ message: 'User not found' });
+  //     }
+  //     user.points -= pointsToSubtract
+  //     if (user.points >= 700) {
+  //       user.VIP = 7;
+  //     } else if (user.points >= 600) {
+  //       user.VIP = 6;
+  //     } else if (user.points >= 500) {
+  //       user.VIP = 5;
+  //     } else if (user.points >= 400) {
+  //       user.VIP = 4;
+  //     } else if (user.points >= 300) {
+  //       user.VIP = 3;
+  //     } else if (user.points >= 200) {
+  //       user.VIP = 2;
+  //     } else if (user.points >= 100) {
+  //       user.VIP = 1;
+  //     } else {
+  //       user.VIP.VIPLevel = 0;
+  //     }
   
-      await user.save();
+  //     await user.save();
   
-      res.status(200).json({ message: 'Points subtracted successfully' ,user});
-    } catch (error) {
-      console.error('Error adding points:', error);
-      res.status(500).json({ error: 'Server error' });
-    }
-  };
+  //     res.status(200).json({ message: 'Points subtracted successfully' ,user});
+  //   } catch (error) {
+  //     console.error('Error adding points:', error);
+  //     res.status(500).json({ error: 'Server error' });
+  //   }
+  // };
 const addUserBalance = async (req,res)=>{
     const {id} = req.params;
     const { balanceToAdd } = req.body;
@@ -301,8 +304,8 @@ module.exports = {
     editUser,
     blockUserLogin,
     unblockUserLogin,
-    addUserPoints,
-    subtractUserPoints,
+    // addUserPoints,
+    // subtractUserPoints,
     addUserBalance,
     subtractUserBalance,
     editUserVipLevel,
