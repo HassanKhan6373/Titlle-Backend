@@ -274,7 +274,29 @@ const addUserBalance = async (req,res)=>{
     }
   }
 
+const updateUserLevel = async(req,res)=>{
+  const { id } = req.params;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      id
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+  if(user.VIP <=2){
+   user.movieRated = 0
+   user.VIP +=1
+   }
+    res.status(200).json({ message: `User level updated`, user });
+  } catch (error) {
+    console.error('Error approving user action:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+}
 module.exports = {
+  updateUserLevel,
     getAllUsers,
     editUser,
     blockUserLogin,

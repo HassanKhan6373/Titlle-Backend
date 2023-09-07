@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getAllUsers,editUser ,blockUserLogin,unblockUserLogin,addUserPoints,subtractUserPoints,addUserBalance,subtractUserBalance,editUserVipLevel,approveUserActions,blockUserActions, getUnblockedUsers, getBlockedUsers,getUserID} = require('../controllers/admin')
+const { getAllUsers,editUser ,blockUserLogin,unblockUserLogin,addUserPoints,subtractUserPoints,addUserBalance,subtractUserBalance,editUserVipLevel,approveUserActions,blockUserActions, getUnblockedUsers, getBlockedUsers,getUserID,updateUserLevel} = require('../controllers/admin')
  
 router.get('/get-all-users', getAllUsers);
 router.post('/block-user/:id', blockUserLogin);
@@ -19,29 +19,7 @@ router.patch('/block-user-action/:id', blockUserActions);
 router.get('/get-blocked-users', getBlockedUsers)
 router.get('/get-unblocked-users', getUnblockedUsers)
 router.get('/get-user-id', getUserID)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+router.patch('/update-user-VIPlevel', updateUserLevel)
 
 
 

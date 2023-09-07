@@ -13,7 +13,16 @@ const setMovieReview = async (req, res) => {
     // const keys = Object.keys(movieData)
     const user = await User.findByIdAndUpdate(userId);
     const movie = await Movie.findByIdAndUpdate(movieId);
+
+
+    if (user.VIP <2 && user.movieRated === 30) {
+      res.status(403).json({message:'User has reached max limit of 30 reviews'})
+      
+    }
+
+
     //checking to add points based on reviews and ratings
+
     if (req.body.review) {
       points += 0.7;
       review_rating["review"] = req.body.review;
@@ -37,10 +46,7 @@ const setMovieReview = async (req, res) => {
       user.points += points;
       user.moviesRated += 1;
       //checking to update VIP levels
-      if (user.movieRated === 30) {
-        //  user.movieRated = 0;
-        user.VIP += 1;
-      }
+     
       if (user.VIP === 0) {
         user.commRate = 0.8;
       } else if (user.VIP === 1) {
