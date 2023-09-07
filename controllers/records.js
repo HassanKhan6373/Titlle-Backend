@@ -59,13 +59,13 @@ const getRandomRecord = async (req, res) => {
     };
 
     // Get the maximum price based on the user's VIP level
-    const {min,max} = vipPriceRanges[user.VIP];
+    const { min, max } = vipPriceRanges[user.VIP];
 
     // Use Mongoose to find movies within the specified price range
     const randomMovie = await Movie.aggregate([
       {
         $match: {
-          price: { $gte:min, $lte: max },
+          price: { $gte: min, $lte: max },
           price: { $lte: maxPrice["max"], $gte: maxPrice["min"] },
         },
       },
@@ -84,28 +84,31 @@ const getRandomRecord = async (req, res) => {
   }
 };
 
-const getMaxTaskUsers = async(req,res)=>{
+const getMaxTaskUsers = async (req, res) => {
   try {
+    const users = await User.find({ moviesRated: 30, VIP: { $lt: 2 } });
 
-    const users = await User.find({ movieRated: 30, VIP: { $lt: 2 } });
-
-   if(users.length === 0){
-    res.status(StatusCodes.NOT_FOUND).send({message:'Users not found'})
-   }
+    if (users.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send({ message: "Users not found" });
+    }
     // Send the retrieved orders as a JSON response
-    res.status(StatusCodes.OK).json({ message: "Succesfully fetched users with max task", record: users });
+    res.status(StatusCodes.OK).json({
+      message: "Succesfully fetched users with max task",
+      record: users,
+    });
   } catch (error) {
     console.error("Error:", error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Server error!", error });
   }
-}
-
+};
 
 module.exports = {
   addRecord,
   getAllRecords,
   getRandomRecord,
-  getMaxTaskUsers
+  getMaxTaskUsers,
 };
